@@ -17,6 +17,12 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import dk.sdu.mmmi.mdsd.math.Litteral
+import dk.sdu.mmmi.mdsd.math.VariableUse
+import dk.sdu.mmmi.mdsd.math.Parenthesis
+import dk.sdu.mmmi.mdsd.math.Assignment
+import dk.sdu.mmmi.mdsd.math.LetEnd
+import dk.sdu.mmmi.mdsd.math.In
 
 /**
  * Generates code from your model files on save.
@@ -28,9 +34,9 @@ class MathGenerator extends AbstractGenerator {
 	static Map<String, Integer> variables = new HashMap();
 	
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		val math = resource.allContents.filter(MathExp).next
-		val result = math.compute
-		
+		val model = resource.allContents.filter(MathExp).next
+		val result = model.compute
+			
 		// You can replace with hovering, see Bettini Chapter 8
 		result.displayPanel
 	}
@@ -40,8 +46,14 @@ class MathGenerator extends AbstractGenerator {
 	// Note: written according to illegal left-recursive grammar, requires fix
 	//
 	
-	def static compute(MathExp math) { 
-		variables.put(math.name, math.exp.computeExp)
+	def static compute(MathExp math) {
+		val count = math.assignments.length
+		for (var i = 0; i < count; i++) {
+			val assignment = math.assignments.get(i)
+			
+			variables.put(assignment.name, assignment.exp.computeExp)
+		}
+		
 		return variables
 	}
 	
@@ -57,10 +69,28 @@ class MathGenerator extends AbstractGenerator {
 	}
 	
 	def static int computePrim(Primary prim) { 
-		switch (prim) {
-			Number: prim.value
-
+		switch prim {
+			Litteral: prim.value
+			VariableUse: prim.computeVariableUse
+			Parenthesis: prim.computeParenthesis
+			default: 0
 		}
+	}
+	
+	def static int computeVariableUse (VariableUse use) {
+		return variables.get(use.ref.name)
+	}
+	
+	def static int computeParenthesis (Parenthesis par) {
+		return par.exp.computeExp
+	}
+	
+	def static int computeLetEnd (LetEnd le) {
+		return 0
+	}
+	
+	def static int computeIn (In in) {
+		return 0
 	}
 
 	def void displayPanel(Map<String, Integer> result) {
@@ -70,6 +100,5 @@ class MathGenerator extends AbstractGenerator {
         }
 		
 		JOptionPane.showMessageDialog(null, resultString ,"Math Language", JOptionPane.INFORMATION_MESSAGE)
-	}@
-
+	}
 }

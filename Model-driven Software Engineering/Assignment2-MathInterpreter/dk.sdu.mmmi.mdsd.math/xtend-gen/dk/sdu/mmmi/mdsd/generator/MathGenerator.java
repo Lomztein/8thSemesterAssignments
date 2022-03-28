@@ -4,14 +4,20 @@
 package dk.sdu.mmmi.mdsd.generator;
 
 import com.google.common.collect.Iterators;
+import dk.sdu.mmmi.mdsd.math.Assignment;
 import dk.sdu.mmmi.mdsd.math.Div;
 import dk.sdu.mmmi.mdsd.math.Exp;
 import dk.sdu.mmmi.mdsd.math.ExpOp;
+import dk.sdu.mmmi.mdsd.math.In;
+import dk.sdu.mmmi.mdsd.math.LetEnd;
+import dk.sdu.mmmi.mdsd.math.Litteral;
 import dk.sdu.mmmi.mdsd.math.MathExp;
 import dk.sdu.mmmi.mdsd.math.Minus;
 import dk.sdu.mmmi.mdsd.math.Mult;
+import dk.sdu.mmmi.mdsd.math.Parenthesis;
 import dk.sdu.mmmi.mdsd.math.Plus;
 import dk.sdu.mmmi.mdsd.math.Primary;
+import dk.sdu.mmmi.mdsd.math.VariableUse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +26,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
+import org.eclipse.xtext.xbase.lib.Conversions;
 
 /**
  * Generates code from your model files on save.
@@ -32,13 +39,19 @@ public class MathGenerator extends AbstractGenerator {
   
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
-    final MathExp math = Iterators.<MathExp>filter(resource.getAllContents(), MathExp.class).next();
-    final Map<String, Integer> result = MathGenerator.compute(math);
+    final MathExp model = Iterators.<MathExp>filter(resource.getAllContents(), MathExp.class).next();
+    final Map<String, Integer> result = MathGenerator.compute(model);
     this.displayPanel(result);
   }
   
   public static Map<String, Integer> compute(final MathExp math) {
-    MathGenerator.variables.put(math.getName(), Integer.valueOf(MathGenerator.computeExp(math.getExp())));
+    final int count = ((Object[])Conversions.unwrapArray(math.getAssignments(), Object.class)).length;
+    for (int i = 0; (i < count); i++) {
+      {
+        final Assignment assignment = math.getAssignments().get(i);
+        MathGenerator.variables.put(assignment.getName(), Integer.valueOf(MathGenerator.computeExp(assignment.getExp())));
+      }
+    }
     return MathGenerator.variables;
   }
   
@@ -84,8 +97,44 @@ public class MathGenerator extends AbstractGenerator {
   }
   
   public static int computePrim(final Primary prim) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field value is undefined for the type Primary & Number");
+    int _switchResult = (int) 0;
+    boolean _matched = false;
+    if (prim instanceof Litteral) {
+      _matched=true;
+      _switchResult = ((Litteral)prim).getValue();
+    }
+    if (!_matched) {
+      if (prim instanceof VariableUse) {
+        _matched=true;
+        _switchResult = MathGenerator.computeVariableUse(((VariableUse)prim));
+      }
+    }
+    if (!_matched) {
+      if (prim instanceof Parenthesis) {
+        _matched=true;
+        _switchResult = MathGenerator.computeParenthesis(((Parenthesis)prim));
+      }
+    }
+    if (!_matched) {
+      _switchResult = 0;
+    }
+    return _switchResult;
+  }
+  
+  public static int computeVariableUse(final VariableUse use) {
+    return (MathGenerator.variables.get(use.getRef().getName())).intValue();
+  }
+  
+  public static int computeParenthesis(final Parenthesis par) {
+    return MathGenerator.computeExp(par.getExp());
+  }
+  
+  public static int computeLetEnd(final LetEnd le) {
+    return 0;
+  }
+  
+  public static int computeIn(final In in) {
+    return 0;
   }
   
   public void displayPanel(final Map<String, Integer> result) {

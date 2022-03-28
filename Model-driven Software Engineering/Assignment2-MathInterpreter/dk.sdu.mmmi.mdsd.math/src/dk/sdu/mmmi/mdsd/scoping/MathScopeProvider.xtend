@@ -11,5 +11,4 @@ package dk.sdu.mmmi.mdsd.scoping
  * on how and when to use it.
  */
 class MathScopeProvider extends AbstractMathScopeProvider {
-
 }
