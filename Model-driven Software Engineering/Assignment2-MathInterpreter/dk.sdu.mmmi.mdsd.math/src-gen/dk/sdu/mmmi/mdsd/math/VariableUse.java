@@ -20,7 +20,7 @@ package dk.sdu.mmmi.mdsd.math;
  * @model
  * @generated
  */
-public interface VariableUse extends Primary
+public interface VariableUse extends Exp
 {
   /**
    * Returns the value of the '<em><b>Ref</b></em>' reference.

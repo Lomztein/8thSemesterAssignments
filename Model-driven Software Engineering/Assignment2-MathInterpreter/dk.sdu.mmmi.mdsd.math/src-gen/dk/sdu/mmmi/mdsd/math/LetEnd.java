@@ -3,6 +3,7 @@
  */
 package dk.sdu.mmmi.mdsd.math;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +23,7 @@ package dk.sdu.mmmi.mdsd.math;
  * @model
  * @generated
  */
-public interface LetEnd extends Primary
+public interface LetEnd extends EObject
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

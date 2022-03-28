@@ -91,21 +91,6 @@ public class MathAdapterFactory extends AdapterFactoryImpl
         return createExpAdapter();
       }
       @Override
-      public Adapter caseExpOp(ExpOp object)
-      {
-        return createExpOpAdapter();
-      }
-      @Override
-      public Adapter casePrimary(Primary object)
-      {
-        return createPrimaryAdapter();
-      }
-      @Override
-      public Adapter caseLitteral(Litteral object)
-      {
-        return createLitteralAdapter();
-      }
-      @Override
       public Adapter caseParenthesis(Parenthesis object)
       {
         return createParenthesisAdapter();
@@ -208,51 +193,6 @@ public class MathAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createExpAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.mdsd.math.ExpOp <em>Exp Op</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see dk.sdu.mmmi.mdsd.math.ExpOp
-   * @generated
-   */
-  public Adapter createExpOpAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.mdsd.math.Primary <em>Primary</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see dk.sdu.mmmi.mdsd.math.Primary
-   * @generated
-   */
-  public Adapter createPrimaryAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link dk.sdu.mmmi.mdsd.math.Litteral <em>Litteral</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see dk.sdu.mmmi.mdsd.math.Litteral
-   * @generated
-   */
-  public Adapter createLitteralAdapter()
   {
     return null;
   }

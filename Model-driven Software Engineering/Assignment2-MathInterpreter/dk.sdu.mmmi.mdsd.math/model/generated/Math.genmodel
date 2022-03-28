@@ -14,14 +14,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Assignment/exp"/>
     </genClasses>
     <genClasses ecoreClass="Math.ecore#//Exp">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Exp/left"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Exp/operator"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Exp/right"/>
-    </genClasses>
-    <genClasses ecoreClass="Math.ecore#//ExpOp"/>
-    <genClasses ecoreClass="Math.ecore#//Primary"/>
-    <genClasses ecoreClass="Math.ecore#//Litteral">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Math.ecore#//Litteral/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Math.ecore#//Exp/value"/>
     </genClasses>
     <genClasses ecoreClass="Math.ecore#//Parenthesis">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Parenthesis/exp"/>
@@ -37,9 +30,21 @@
     <genClasses ecoreClass="Math.ecore#//In">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//In/exp"/>
     </genClasses>
-    <genClasses ecoreClass="Math.ecore#//Plus"/>
-    <genClasses ecoreClass="Math.ecore#//Minus"/>
-    <genClasses ecoreClass="Math.ecore#//Mult"/>
-    <genClasses ecoreClass="Math.ecore#//Div"/>
+    <genClasses ecoreClass="Math.ecore#//Plus">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Plus/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Plus/right"/>
+    </genClasses>
+    <genClasses ecoreClass="Math.ecore#//Minus">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Minus/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Minus/right"/>
+    </genClasses>
+    <genClasses ecoreClass="Math.ecore#//Mult">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Mult/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Mult/right"/>
+    </genClasses>
+    <genClasses ecoreClass="Math.ecore#//Div">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Div/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Math.ecore#//Div/right"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

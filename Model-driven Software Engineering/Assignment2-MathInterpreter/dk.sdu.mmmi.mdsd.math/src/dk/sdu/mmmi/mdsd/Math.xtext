@@ -10,19 +10,27 @@ Assignment:
 	'var' name=ID '=' exp=Exp
 ;
 
-Exp: // Illegal due to left recursion
-	left=Primary (operator=ExpOp right=Exp)?
+Exp: PlusOrMinus | MultOrDiv | Primary;
+
+PlusOrMinus returns Exp:
+	MultOrDiv (
+		({Plus.left=current} '+' | {Minus.left=current} '-')
+		right=MultOrDiv
+	)*
 ;
 
-ExpOp:
-	{Plus} '+' | {Minus} '-' | {Mult} '*' | {Div} '/'	
+MultOrDiv returns Exp:
+	Primary (
+		({Mult.left=current} '*' | {Div.left=current} '/')
+		right=Primary
+	)*
 ;
 
-Primary:
-	Litteral | Parenthesis | VariableUse | LetEnd
+Primary returns Exp:
+	Litteral | Parenthesis | VariableUse
 ;
 
-Litteral:
+Litteral returns Exp:
 	value=INT
 ;
 

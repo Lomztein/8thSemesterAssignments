@@ -7,5 +7,5 @@ package dk.sdu.mmmi.mdsd;
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 @SuppressWarnings("all")
-public class MathRuntimeModule extends AbstractMathRuntimeModule {
+public class MathRuntimeModule /* implements AbstractMathRuntimeModule  */{
 }

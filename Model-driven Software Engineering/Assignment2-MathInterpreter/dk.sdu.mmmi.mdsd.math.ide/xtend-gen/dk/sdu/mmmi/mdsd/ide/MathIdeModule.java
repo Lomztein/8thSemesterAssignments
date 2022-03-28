@@ -7,5 +7,5 @@ package dk.sdu.mmmi.mdsd.ide;
  * Use this class to register ide components.
  */
 @SuppressWarnings("all")
-public class MathIdeModule extends AbstractMathIdeModule {
+public class MathIdeModule /* implements AbstractMathIdeModule  */{
 }

@@ -3,7 +3,6 @@
  */
 package dk.sdu.mmmi.mdsd.ui;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 
 /**
@@ -11,8 +10,5 @@ import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
  */
 @FinalFieldsConstructor
 @SuppressWarnings("all")
-public class MathUiModule extends AbstractMathUiModule {
-  public MathUiModule(final AbstractUIPlugin plugin) {
-    super(plugin);
-  }
+public class MathUiModule /* implements AbstractMathUiModule  */{
 }

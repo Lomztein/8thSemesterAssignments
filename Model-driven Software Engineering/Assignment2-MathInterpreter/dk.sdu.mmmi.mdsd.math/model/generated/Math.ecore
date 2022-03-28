@@ -10,24 +10,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="exp" eType="#//Exp" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Exp">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Primary"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="operator" eType="#//ExpOp"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Exp" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExpOp"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Primary"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Litteral" eSuperTypes="#//Primary">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Parenthesis" eSuperTypes="#//Primary">
+  <eClassifiers xsi:type="ecore:EClass" name="Parenthesis" eSuperTypes="#//Exp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="exp" eType="#//Exp" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="VariableUse" eSuperTypes="#//Primary">
+  <eClassifiers xsi:type="ecore:EClass" name="VariableUse" eSuperTypes="#//Exp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//Assignment"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LetEnd" eSuperTypes="#//Primary">
+  <eClassifiers xsi:type="ecore:EClass" name="LetEnd">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exp" eType="#//Exp" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="in" eType="#//In" containment="true"/>
@@ -35,8 +26,20 @@
   <eClassifiers xsi:type="ecore:EClass" name="In">
     <eStructuralFeatures xsi:type="ecore:EReference" name="exp" eType="#//Exp" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Plus" eSuperTypes="#//ExpOp"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Minus" eSuperTypes="#//ExpOp"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Mult" eSuperTypes="#//ExpOp"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Div" eSuperTypes="#//ExpOp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Plus" eSuperTypes="#//Exp">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Exp" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Exp" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Minus" eSuperTypes="#//Exp">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Exp" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Exp" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Mult" eSuperTypes="#//Exp">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Exp" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Exp" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Div" eSuperTypes="#//Exp">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Exp" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Exp" containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

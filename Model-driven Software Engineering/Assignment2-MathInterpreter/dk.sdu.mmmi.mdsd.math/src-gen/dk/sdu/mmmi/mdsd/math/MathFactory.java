@@ -51,33 +51,6 @@ public interface MathFactory extends EFactory
   Exp createExp();
 
   /**
-   * Returns a new object of class '<em>Exp Op</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Exp Op</em>'.
-   * @generated
-   */
-  ExpOp createExpOp();
-
-  /**
-   * Returns a new object of class '<em>Primary</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Primary</em>'.
-   * @generated
-   */
-  Primary createPrimary();
-
-  /**
-   * Returns a new object of class '<em>Litteral</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Litteral</em>'.
-   * @generated
-   */
-  Litteral createLitteral();
-
-  /**
    * Returns a new object of class '<em>Parenthesis</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

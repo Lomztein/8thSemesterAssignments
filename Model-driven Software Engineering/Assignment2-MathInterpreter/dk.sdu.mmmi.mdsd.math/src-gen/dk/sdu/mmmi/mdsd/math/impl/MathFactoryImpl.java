@@ -68,9 +68,6 @@ public class MathFactoryImpl extends EFactoryImpl implements MathFactory
       case MathPackage.MATH_EXP: return createMathExp();
       case MathPackage.ASSIGNMENT: return createAssignment();
       case MathPackage.EXP: return createExp();
-      case MathPackage.EXP_OP: return createExpOp();
-      case MathPackage.PRIMARY: return createPrimary();
-      case MathPackage.LITTERAL: return createLitteral();
       case MathPackage.PARENTHESIS: return createParenthesis();
       case MathPackage.VARIABLE_USE: return createVariableUse();
       case MathPackage.LET_END: return createLetEnd();
@@ -118,42 +115,6 @@ public class MathFactoryImpl extends EFactoryImpl implements MathFactory
   {
     ExpImpl exp = new ExpImpl();
     return exp;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ExpOp createExpOp()
-  {
-    ExpOpImpl expOp = new ExpOpImpl();
-    return expOp;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Primary createPrimary()
-  {
-    PrimaryImpl primary = new PrimaryImpl();
-    return primary;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Litteral createLitteral()
-  {
-    LitteralImpl litteral = new LitteralImpl();
-    return litteral;
   }
 
   /**

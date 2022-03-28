@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class VariableUseImpl extends PrimaryImpl implements VariableUse
+public class VariableUseImpl extends ExpImpl implements VariableUse
 {
   /**
    * The cached value of the '{@link #getRef() <em>Ref</em>}' reference.

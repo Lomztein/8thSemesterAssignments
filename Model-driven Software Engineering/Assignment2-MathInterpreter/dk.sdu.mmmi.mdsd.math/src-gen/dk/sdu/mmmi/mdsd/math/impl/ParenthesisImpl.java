@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class ParenthesisImpl extends PrimaryImpl implements Parenthesis
+public class ParenthesisImpl extends ExpImpl implements Parenthesis
 {
   /**
    * The cached value of the '{@link #getExp() <em>Exp</em>}' containment reference.

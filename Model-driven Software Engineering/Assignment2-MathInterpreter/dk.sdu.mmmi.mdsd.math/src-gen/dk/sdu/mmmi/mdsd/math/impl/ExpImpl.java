@@ -4,15 +4,11 @@
 package dk.sdu.mmmi.mdsd.math.impl;
 
 import dk.sdu.mmmi.mdsd.math.Exp;
-import dk.sdu.mmmi.mdsd.math.ExpOp;
 import dk.sdu.mmmi.mdsd.math.MathPackage;
-import dk.sdu.mmmi.mdsd.math.Primary;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -25,9 +21,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link dk.sdu.mmmi.mdsd.math.impl.ExpImpl#getLeft <em>Left</em>}</li>
- *   <li>{@link dk.sdu.mmmi.mdsd.math.impl.ExpImpl#getOperator <em>Operator</em>}</li>
- *   <li>{@link dk.sdu.mmmi.mdsd.math.impl.ExpImpl#getRight <em>Right</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.mdsd.math.impl.ExpImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
@@ -35,34 +29,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class ExpImpl extends MinimalEObjectImpl.Container implements Exp
 {
   /**
-   * The cached value of the '{@link #getLeft() <em>Left</em>}' containment reference.
+   * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getLeft()
+   * @see #getValue()
    * @generated
    * @ordered
    */
-  protected Primary left;
+  protected static final int VALUE_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #getOperator() <em>Operator</em>}' containment reference.
+   * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOperator()
+   * @see #getValue()
    * @generated
    * @ordered
    */
-  protected ExpOp operator;
-
-  /**
-   * The cached value of the '{@link #getRight() <em>Right</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRight()
-   * @generated
-   * @ordered
-   */
-  protected Exp right;
+  protected int value = VALUE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -91,9 +75,9 @@ public class ExpImpl extends MinimalEObjectImpl.Container implements Exp
    * @generated
    */
   @Override
-  public Primary getLeft()
+  public int getValue()
   {
-    return left;
+    return value;
   }
 
   /**
@@ -101,158 +85,13 @@ public class ExpImpl extends MinimalEObjectImpl.Container implements Exp
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetLeft(Primary newLeft, NotificationChain msgs)
+  @Override
+  public void setValue(int newValue)
   {
-    Primary oldLeft = left;
-    left = newLeft;
+    int oldValue = value;
+    value = newValue;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MathPackage.EXP__LEFT, oldLeft, newLeft);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setLeft(Primary newLeft)
-  {
-    if (newLeft != left)
-    {
-      NotificationChain msgs = null;
-      if (left != null)
-        msgs = ((InternalEObject)left).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MathPackage.EXP__LEFT, null, msgs);
-      if (newLeft != null)
-        msgs = ((InternalEObject)newLeft).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MathPackage.EXP__LEFT, null, msgs);
-      msgs = basicSetLeft(newLeft, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MathPackage.EXP__LEFT, newLeft, newLeft));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ExpOp getOperator()
-  {
-    return operator;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetOperator(ExpOp newOperator, NotificationChain msgs)
-  {
-    ExpOp oldOperator = operator;
-    operator = newOperator;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MathPackage.EXP__OPERATOR, oldOperator, newOperator);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setOperator(ExpOp newOperator)
-  {
-    if (newOperator != operator)
-    {
-      NotificationChain msgs = null;
-      if (operator != null)
-        msgs = ((InternalEObject)operator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MathPackage.EXP__OPERATOR, null, msgs);
-      if (newOperator != null)
-        msgs = ((InternalEObject)newOperator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MathPackage.EXP__OPERATOR, null, msgs);
-      msgs = basicSetOperator(newOperator, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MathPackage.EXP__OPERATOR, newOperator, newOperator));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Exp getRight()
-  {
-    return right;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetRight(Exp newRight, NotificationChain msgs)
-  {
-    Exp oldRight = right;
-    right = newRight;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MathPackage.EXP__RIGHT, oldRight, newRight);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setRight(Exp newRight)
-  {
-    if (newRight != right)
-    {
-      NotificationChain msgs = null;
-      if (right != null)
-        msgs = ((InternalEObject)right).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MathPackage.EXP__RIGHT, null, msgs);
-      if (newRight != null)
-        msgs = ((InternalEObject)newRight).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MathPackage.EXP__RIGHT, null, msgs);
-      msgs = basicSetRight(newRight, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MathPackage.EXP__RIGHT, newRight, newRight));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case MathPackage.EXP__LEFT:
-        return basicSetLeft(null, msgs);
-      case MathPackage.EXP__OPERATOR:
-        return basicSetOperator(null, msgs);
-      case MathPackage.EXP__RIGHT:
-        return basicSetRight(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
+      eNotify(new ENotificationImpl(this, Notification.SET, MathPackage.EXP__VALUE, oldValue, value));
   }
 
   /**
@@ -265,12 +104,8 @@ public class ExpImpl extends MinimalEObjectImpl.Container implements Exp
   {
     switch (featureID)
     {
-      case MathPackage.EXP__LEFT:
-        return getLeft();
-      case MathPackage.EXP__OPERATOR:
-        return getOperator();
-      case MathPackage.EXP__RIGHT:
-        return getRight();
+      case MathPackage.EXP__VALUE:
+        return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -285,14 +120,8 @@ public class ExpImpl extends MinimalEObjectImpl.Container implements Exp
   {
     switch (featureID)
     {
-      case MathPackage.EXP__LEFT:
-        setLeft((Primary)newValue);
-        return;
-      case MathPackage.EXP__OPERATOR:
-        setOperator((ExpOp)newValue);
-        return;
-      case MathPackage.EXP__RIGHT:
-        setRight((Exp)newValue);
+      case MathPackage.EXP__VALUE:
+        setValue((Integer)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -308,14 +137,8 @@ public class ExpImpl extends MinimalEObjectImpl.Container implements Exp
   {
     switch (featureID)
     {
-      case MathPackage.EXP__LEFT:
-        setLeft((Primary)null);
-        return;
-      case MathPackage.EXP__OPERATOR:
-        setOperator((ExpOp)null);
-        return;
-      case MathPackage.EXP__RIGHT:
-        setRight((Exp)null);
+      case MathPackage.EXP__VALUE:
+        setValue(VALUE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -331,14 +154,27 @@ public class ExpImpl extends MinimalEObjectImpl.Container implements Exp
   {
     switch (featureID)
     {
-      case MathPackage.EXP__LEFT:
-        return left != null;
-      case MathPackage.EXP__OPERATOR:
-        return operator != null;
-      case MathPackage.EXP__RIGHT:
-        return right != null;
+      case MathPackage.EXP__VALUE:
+        return value != VALUE_EDEFAULT;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (value: ");
+    result.append(value);
+    result.append(')');
+    return result.toString();
   }
 
 } //ExpImpl

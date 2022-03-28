@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +32,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class LetEndImpl extends PrimaryImpl implements LetEnd
+public class LetEndImpl extends MinimalEObjectImpl.Container implements LetEnd
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.

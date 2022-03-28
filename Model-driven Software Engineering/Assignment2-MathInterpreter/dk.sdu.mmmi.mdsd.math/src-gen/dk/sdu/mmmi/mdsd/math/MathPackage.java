@@ -133,31 +133,13 @@ public interface MathPackage extends EPackage
   int EXP = 2;
 
   /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * The feature id for the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXP__LEFT = 0;
-
-  /**
-   * The feature id for the '<em><b>Operator</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXP__OPERATOR = 1;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXP__RIGHT = 2;
+  int EXP__VALUE = 0;
 
   /**
    * The number of structural features of the '<em>Exp</em>' class.
@@ -166,73 +148,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXP_FEATURE_COUNT = 3;
-
-  /**
-   * The meta object id for the '{@link dk.sdu.mmmi.mdsd.math.impl.ExpOpImpl <em>Exp Op</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see dk.sdu.mmmi.mdsd.math.impl.ExpOpImpl
-   * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getExpOp()
-   * @generated
-   */
-  int EXP_OP = 3;
-
-  /**
-   * The number of structural features of the '<em>Exp Op</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXP_OP_FEATURE_COUNT = 0;
-
-  /**
-   * The meta object id for the '{@link dk.sdu.mmmi.mdsd.math.impl.PrimaryImpl <em>Primary</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see dk.sdu.mmmi.mdsd.math.impl.PrimaryImpl
-   * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getPrimary()
-   * @generated
-   */
-  int PRIMARY = 4;
-
-  /**
-   * The number of structural features of the '<em>Primary</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRIMARY_FEATURE_COUNT = 0;
-
-  /**
-   * The meta object id for the '{@link dk.sdu.mmmi.mdsd.math.impl.LitteralImpl <em>Litteral</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see dk.sdu.mmmi.mdsd.math.impl.LitteralImpl
-   * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getLitteral()
-   * @generated
-   */
-  int LITTERAL = 5;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LITTERAL__VALUE = PRIMARY_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Litteral</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LITTERAL_FEATURE_COUNT = PRIMARY_FEATURE_COUNT + 1;
+  int EXP_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.mdsd.math.impl.ParenthesisImpl <em>Parenthesis</em>}' class.
@@ -242,7 +158,16 @@ public interface MathPackage extends EPackage
    * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getParenthesis()
    * @generated
    */
-  int PARENTHESIS = 6;
+  int PARENTHESIS = 3;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARENTHESIS__VALUE = EXP__VALUE;
 
   /**
    * The feature id for the '<em><b>Exp</b></em>' containment reference.
@@ -251,7 +176,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARENTHESIS__EXP = PRIMARY_FEATURE_COUNT + 0;
+  int PARENTHESIS__EXP = EXP_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Parenthesis</em>' class.
@@ -260,7 +185,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARENTHESIS_FEATURE_COUNT = PRIMARY_FEATURE_COUNT + 1;
+  int PARENTHESIS_FEATURE_COUNT = EXP_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.mdsd.math.impl.VariableUseImpl <em>Variable Use</em>}' class.
@@ -270,7 +195,16 @@ public interface MathPackage extends EPackage
    * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getVariableUse()
    * @generated
    */
-  int VARIABLE_USE = 7;
+  int VARIABLE_USE = 4;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_USE__VALUE = EXP__VALUE;
 
   /**
    * The feature id for the '<em><b>Ref</b></em>' reference.
@@ -279,7 +213,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_USE__REF = PRIMARY_FEATURE_COUNT + 0;
+  int VARIABLE_USE__REF = EXP_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Variable Use</em>' class.
@@ -288,7 +222,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_USE_FEATURE_COUNT = PRIMARY_FEATURE_COUNT + 1;
+  int VARIABLE_USE_FEATURE_COUNT = EXP_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.mdsd.math.impl.LetEndImpl <em>Let End</em>}' class.
@@ -298,7 +232,7 @@ public interface MathPackage extends EPackage
    * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getLetEnd()
    * @generated
    */
-  int LET_END = 8;
+  int LET_END = 5;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -307,7 +241,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LET_END__NAME = PRIMARY_FEATURE_COUNT + 0;
+  int LET_END__NAME = 0;
 
   /**
    * The feature id for the '<em><b>Exp</b></em>' containment reference.
@@ -316,7 +250,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LET_END__EXP = PRIMARY_FEATURE_COUNT + 1;
+  int LET_END__EXP = 1;
 
   /**
    * The feature id for the '<em><b>In</b></em>' containment reference.
@@ -325,7 +259,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LET_END__IN = PRIMARY_FEATURE_COUNT + 2;
+  int LET_END__IN = 2;
 
   /**
    * The number of structural features of the '<em>Let End</em>' class.
@@ -334,7 +268,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LET_END_FEATURE_COUNT = PRIMARY_FEATURE_COUNT + 3;
+  int LET_END_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.mdsd.math.impl.InImpl <em>In</em>}' class.
@@ -344,7 +278,7 @@ public interface MathPackage extends EPackage
    * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getIn()
    * @generated
    */
-  int IN = 9;
+  int IN = 6;
 
   /**
    * The feature id for the '<em><b>Exp</b></em>' containment reference.
@@ -372,7 +306,34 @@ public interface MathPackage extends EPackage
    * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getPlus()
    * @generated
    */
-  int PLUS = 10;
+  int PLUS = 7;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PLUS__VALUE = EXP__VALUE;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PLUS__LEFT = EXP_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PLUS__RIGHT = EXP_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Plus</em>' class.
@@ -381,7 +342,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PLUS_FEATURE_COUNT = EXP_OP_FEATURE_COUNT + 0;
+  int PLUS_FEATURE_COUNT = EXP_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.mdsd.math.impl.MinusImpl <em>Minus</em>}' class.
@@ -391,7 +352,34 @@ public interface MathPackage extends EPackage
    * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getMinus()
    * @generated
    */
-  int MINUS = 11;
+  int MINUS = 8;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MINUS__VALUE = EXP__VALUE;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MINUS__LEFT = EXP_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MINUS__RIGHT = EXP_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Minus</em>' class.
@@ -400,7 +388,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MINUS_FEATURE_COUNT = EXP_OP_FEATURE_COUNT + 0;
+  int MINUS_FEATURE_COUNT = EXP_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.mdsd.math.impl.MultImpl <em>Mult</em>}' class.
@@ -410,7 +398,34 @@ public interface MathPackage extends EPackage
    * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getMult()
    * @generated
    */
-  int MULT = 12;
+  int MULT = 9;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MULT__VALUE = EXP__VALUE;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MULT__LEFT = EXP_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MULT__RIGHT = EXP_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Mult</em>' class.
@@ -419,7 +434,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MULT_FEATURE_COUNT = EXP_OP_FEATURE_COUNT + 0;
+  int MULT_FEATURE_COUNT = EXP_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link dk.sdu.mmmi.mdsd.math.impl.DivImpl <em>Div</em>}' class.
@@ -429,7 +444,34 @@ public interface MathPackage extends EPackage
    * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getDiv()
    * @generated
    */
-  int DIV = 13;
+  int DIV = 10;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIV__VALUE = EXP__VALUE;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIV__LEFT = EXP_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIV__RIGHT = EXP_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Div</em>' class.
@@ -438,7 +480,7 @@ public interface MathPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DIV_FEATURE_COUNT = EXP_OP_FEATURE_COUNT + 0;
+  int DIV_FEATURE_COUNT = EXP_FEATURE_COUNT + 2;
 
 
   /**
@@ -505,78 +547,15 @@ public interface MathPackage extends EPackage
   EClass getExp();
 
   /**
-   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.mdsd.math.Exp#getLeft <em>Left</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see dk.sdu.mmmi.mdsd.math.Exp#getLeft()
-   * @see #getExp()
-   * @generated
-   */
-  EReference getExp_Left();
-
-  /**
-   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.mdsd.math.Exp#getOperator <em>Operator</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Operator</em>'.
-   * @see dk.sdu.mmmi.mdsd.math.Exp#getOperator()
-   * @see #getExp()
-   * @generated
-   */
-  EReference getExp_Operator();
-
-  /**
-   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.mdsd.math.Exp#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see dk.sdu.mmmi.mdsd.math.Exp#getRight()
-   * @see #getExp()
-   * @generated
-   */
-  EReference getExp_Right();
-
-  /**
-   * Returns the meta object for class '{@link dk.sdu.mmmi.mdsd.math.ExpOp <em>Exp Op</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Exp Op</em>'.
-   * @see dk.sdu.mmmi.mdsd.math.ExpOp
-   * @generated
-   */
-  EClass getExpOp();
-
-  /**
-   * Returns the meta object for class '{@link dk.sdu.mmmi.mdsd.math.Primary <em>Primary</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Primary</em>'.
-   * @see dk.sdu.mmmi.mdsd.math.Primary
-   * @generated
-   */
-  EClass getPrimary();
-
-  /**
-   * Returns the meta object for class '{@link dk.sdu.mmmi.mdsd.math.Litteral <em>Litteral</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Litteral</em>'.
-   * @see dk.sdu.mmmi.mdsd.math.Litteral
-   * @generated
-   */
-  EClass getLitteral();
-
-  /**
-   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.mdsd.math.Litteral#getValue <em>Value</em>}'.
+   * Returns the meta object for the attribute '{@link dk.sdu.mmmi.mdsd.math.Exp#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Value</em>'.
-   * @see dk.sdu.mmmi.mdsd.math.Litteral#getValue()
-   * @see #getLitteral()
+   * @see dk.sdu.mmmi.mdsd.math.Exp#getValue()
+   * @see #getExp()
    * @generated
    */
-  EAttribute getLitteral_Value();
+  EAttribute getExp_Value();
 
   /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.mdsd.math.Parenthesis <em>Parenthesis</em>}'.
@@ -695,6 +674,28 @@ public interface MathPackage extends EPackage
   EClass getPlus();
 
   /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.mdsd.math.Plus#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see dk.sdu.mmmi.mdsd.math.Plus#getLeft()
+   * @see #getPlus()
+   * @generated
+   */
+  EReference getPlus_Left();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.mdsd.math.Plus#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see dk.sdu.mmmi.mdsd.math.Plus#getRight()
+   * @see #getPlus()
+   * @generated
+   */
+  EReference getPlus_Right();
+
+  /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.mdsd.math.Minus <em>Minus</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -703,6 +704,28 @@ public interface MathPackage extends EPackage
    * @generated
    */
   EClass getMinus();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.mdsd.math.Minus#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see dk.sdu.mmmi.mdsd.math.Minus#getLeft()
+   * @see #getMinus()
+   * @generated
+   */
+  EReference getMinus_Left();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.mdsd.math.Minus#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see dk.sdu.mmmi.mdsd.math.Minus#getRight()
+   * @see #getMinus()
+   * @generated
+   */
+  EReference getMinus_Right();
 
   /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.mdsd.math.Mult <em>Mult</em>}'.
@@ -715,6 +738,28 @@ public interface MathPackage extends EPackage
   EClass getMult();
 
   /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.mdsd.math.Mult#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see dk.sdu.mmmi.mdsd.math.Mult#getLeft()
+   * @see #getMult()
+   * @generated
+   */
+  EReference getMult_Left();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.mdsd.math.Mult#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see dk.sdu.mmmi.mdsd.math.Mult#getRight()
+   * @see #getMult()
+   * @generated
+   */
+  EReference getMult_Right();
+
+  /**
    * Returns the meta object for class '{@link dk.sdu.mmmi.mdsd.math.Div <em>Div</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -723,6 +768,28 @@ public interface MathPackage extends EPackage
    * @generated
    */
   EClass getDiv();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.mdsd.math.Div#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see dk.sdu.mmmi.mdsd.math.Div#getLeft()
+   * @see #getDiv()
+   * @generated
+   */
+  EReference getDiv_Left();
+
+  /**
+   * Returns the meta object for the containment reference '{@link dk.sdu.mmmi.mdsd.math.Div#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see dk.sdu.mmmi.mdsd.math.Div#getRight()
+   * @see #getDiv()
+   * @generated
+   */
+  EReference getDiv_Right();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -802,66 +869,12 @@ public interface MathPackage extends EPackage
     EClass EXP = eINSTANCE.getExp();
 
     /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EXP__LEFT = eINSTANCE.getExp_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Operator</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EXP__OPERATOR = eINSTANCE.getExp_Operator();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EXP__RIGHT = eINSTANCE.getExp_Right();
-
-    /**
-     * The meta object literal for the '{@link dk.sdu.mmmi.mdsd.math.impl.ExpOpImpl <em>Exp Op</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see dk.sdu.mmmi.mdsd.math.impl.ExpOpImpl
-     * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getExpOp()
-     * @generated
-     */
-    EClass EXP_OP = eINSTANCE.getExpOp();
-
-    /**
-     * The meta object literal for the '{@link dk.sdu.mmmi.mdsd.math.impl.PrimaryImpl <em>Primary</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see dk.sdu.mmmi.mdsd.math.impl.PrimaryImpl
-     * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getPrimary()
-     * @generated
-     */
-    EClass PRIMARY = eINSTANCE.getPrimary();
-
-    /**
-     * The meta object literal for the '{@link dk.sdu.mmmi.mdsd.math.impl.LitteralImpl <em>Litteral</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see dk.sdu.mmmi.mdsd.math.impl.LitteralImpl
-     * @see dk.sdu.mmmi.mdsd.math.impl.MathPackageImpl#getLitteral()
-     * @generated
-     */
-    EClass LITTERAL = eINSTANCE.getLitteral();
-
-    /**
      * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute LITTERAL__VALUE = eINSTANCE.getLitteral_Value();
+    EAttribute EXP__VALUE = eINSTANCE.getExp_Value();
 
     /**
      * The meta object literal for the '{@link dk.sdu.mmmi.mdsd.math.impl.ParenthesisImpl <em>Parenthesis</em>}' class.
@@ -962,6 +975,22 @@ public interface MathPackage extends EPackage
     EClass PLUS = eINSTANCE.getPlus();
 
     /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PLUS__LEFT = eINSTANCE.getPlus_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PLUS__RIGHT = eINSTANCE.getPlus_Right();
+
+    /**
      * The meta object literal for the '{@link dk.sdu.mmmi.mdsd.math.impl.MinusImpl <em>Minus</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -970,6 +999,22 @@ public interface MathPackage extends EPackage
      * @generated
      */
     EClass MINUS = eINSTANCE.getMinus();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MINUS__LEFT = eINSTANCE.getMinus_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MINUS__RIGHT = eINSTANCE.getMinus_Right();
 
     /**
      * The meta object literal for the '{@link dk.sdu.mmmi.mdsd.math.impl.MultImpl <em>Mult</em>}' class.
@@ -982,6 +1027,22 @@ public interface MathPackage extends EPackage
     EClass MULT = eINSTANCE.getMult();
 
     /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MULT__LEFT = eINSTANCE.getMult_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MULT__RIGHT = eINSTANCE.getMult_Right();
+
+    /**
      * The meta object literal for the '{@link dk.sdu.mmmi.mdsd.math.impl.DivImpl <em>Div</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -990,6 +1051,22 @@ public interface MathPackage extends EPackage
      * @generated
      */
     EClass DIV = eINSTANCE.getDiv();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DIV__LEFT = eINSTANCE.getDiv_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DIV__RIGHT = eINSTANCE.getDiv_Right();
 
   }
 
