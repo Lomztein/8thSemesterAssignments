@@ -3,13 +3,7 @@
  */
 package dk.sdu.mmmi.mdsd.generator
 
-import dk.sdu.mmmi.mdsd.math.Div
-import dk.sdu.mmmi.mdsd.math.Exp
-import dk.sdu.mmmi.mdsd.math.MathExp
-import dk.sdu.mmmi.mdsd.math.Minus
-import dk.sdu.mmmi.mdsd.math.Mult
-import dk.sdu.mmmi.mdsd.math.Plus
-import dk.sdu.mmmi.mdsd.math.Primary
+
 import java.util.HashMap
 import java.util.Map
 import javax.swing.JOptionPane
@@ -17,11 +11,16 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import dk.sdu.mmmi.mdsd.math.MathExp
+import dk.sdu.mmmi.mdsd.math.Exp
+import dk.sdu.mmmi.mdsd.math.Plus
+import dk.sdu.mmmi.mdsd.math.Minus
+import dk.sdu.mmmi.mdsd.math.Mult
+import dk.sdu.mmmi.mdsd.math.Div
 import dk.sdu.mmmi.mdsd.math.Litteral
 import dk.sdu.mmmi.mdsd.math.VariableUse
-import dk.sdu.mmmi.mdsd.math.Parenthesis
-import dk.sdu.mmmi.mdsd.math.Assignment
 import dk.sdu.mmmi.mdsd.math.LetEnd
+import dk.sdu.mmmi.mdsd.math.Parenthesis
 import dk.sdu.mmmi.mdsd.math.In
 
 /**
@@ -58,21 +57,15 @@ class MathGenerator extends AbstractGenerator {
 	}
 	
 	def static int computeExp(Exp exp) {
-		val left = exp.left.computePrim
-		switch exp.operator {
-			Plus: left+exp.right.computeExp
-			Minus: left-exp.right.computeExp
-			Mult: left*exp.right.computeExp
-			Div: left/exp.right.computeExp
-			default: left
-		}
-	}
-	
-	def static int computePrim(Primary prim) { 
-		switch prim {
-			Litteral: prim.value
-			VariableUse: prim.computeVariableUse
-			Parenthesis: prim.computeParenthesis
+		switch exp {
+			Plus: exp.left.computeExp + exp.right.computeExp
+			Minus: exp.left.computeExp - exp.right.computeExp
+			Mult: exp.left.computeExp * exp.right.computeExp
+			Div: exp.left.computeExp / exp.right.computeExp
+			Litteral: exp.value
+			Parenthesis: exp.computeParenthesis
+			VariableUse: exp.computeVariableUse
+			LetEnd: exp.computeLetEnd
 			default: 0
 		}
 	}
@@ -86,11 +79,10 @@ class MathGenerator extends AbstractGenerator {
 	}
 	
 	def static int computeLetEnd (LetEnd le) {
-		return 0
-	}
-	
-	def static int computeIn (In in) {
-		return 0
+		val leResult = le.exp.computeExp
+		variables.put(le.name, leResult) // Might need a different, temporary container :thinking:
+		val inResult = le.in.computeExp
+		return inResult
 	}
 
 	def void displayPanel(Map<String, Integer> result) {

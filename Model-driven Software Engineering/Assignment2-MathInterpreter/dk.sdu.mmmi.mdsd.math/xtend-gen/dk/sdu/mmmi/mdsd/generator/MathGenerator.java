@@ -5,11 +5,15 @@ package dk.sdu.mmmi.mdsd.generator;
 
 import com.google.common.collect.Iterators;
 import dk.sdu.mmmi.mdsd.math.Assignment;
+import dk.sdu.mmmi.mdsd.math.Div;
 import dk.sdu.mmmi.mdsd.math.Exp;
-import dk.sdu.mmmi.mdsd.math.In;
 import dk.sdu.mmmi.mdsd.math.LetEnd;
+import dk.sdu.mmmi.mdsd.math.Litteral;
 import dk.sdu.mmmi.mdsd.math.MathExp;
+import dk.sdu.mmmi.mdsd.math.Minus;
+import dk.sdu.mmmi.mdsd.math.Mult;
 import dk.sdu.mmmi.mdsd.math.Parenthesis;
+import dk.sdu.mmmi.mdsd.math.Plus;
 import dk.sdu.mmmi.mdsd.math.VariableUse;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,32 +53,66 @@ public class MathGenerator extends AbstractGenerator {
   }
   
   public static int computeExp(final Exp exp) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field left is undefined for the type Exp"
-      + "\nThe method or field operator is undefined for the type Exp"
-      + "\nThe method or field right is undefined for the type Exp"
-      + "\nThe method or field right is undefined for the type Exp"
-      + "\nThe method or field right is undefined for the type Exp"
-      + "\nThe method or field right is undefined for the type Exp"
-      + "\ncomputePrim cannot be resolved"
-      + "\n+ cannot be resolved"
-      + "\ncomputeExp cannot be resolved"
-      + "\n- cannot be resolved"
-      + "\ncomputeExp cannot be resolved"
-      + "\n* cannot be resolved"
-      + "\ncomputeExp cannot be resolved"
-      + "\n/ cannot be resolved"
-      + "\ncomputeExp cannot be resolved");
-  }
-  
-  public static int computePrim(final /* Primary */Object prim) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nLitteral cannot be resolved to a type."
-      + "\nUnreachable code: The case can never match. It is already handled by a previous condition."
-      + "\nUnreachable code: The case can never match. It is already handled by a previous condition."
-      + "\nvalue cannot be resolved"
-      + "\ncomputeVariableUse cannot be resolved"
-      + "\ncomputeParenthesis cannot be resolved");
+    int _switchResult = (int) 0;
+    boolean _matched = false;
+    if (exp instanceof Plus) {
+      _matched=true;
+      int _computeExp = MathGenerator.computeExp(((Plus)exp).getLeft());
+      int _computeExp_1 = MathGenerator.computeExp(((Plus)exp).getRight());
+      _switchResult = (_computeExp + _computeExp_1);
+    }
+    if (!_matched) {
+      if (exp instanceof Minus) {
+        _matched=true;
+        int _computeExp = MathGenerator.computeExp(((Minus)exp).getLeft());
+        int _computeExp_1 = MathGenerator.computeExp(((Minus)exp).getRight());
+        _switchResult = (_computeExp - _computeExp_1);
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof Mult) {
+        _matched=true;
+        int _computeExp = MathGenerator.computeExp(((Mult)exp).getLeft());
+        int _computeExp_1 = MathGenerator.computeExp(((Mult)exp).getRight());
+        _switchResult = (_computeExp * _computeExp_1);
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof Div) {
+        _matched=true;
+        int _computeExp = MathGenerator.computeExp(((Div)exp).getLeft());
+        int _computeExp_1 = MathGenerator.computeExp(((Div)exp).getRight());
+        _switchResult = (_computeExp / _computeExp_1);
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof Litteral) {
+        _matched=true;
+        _switchResult = ((Litteral)exp).getValue();
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof Parenthesis) {
+        _matched=true;
+        _switchResult = MathGenerator.computeParenthesis(((Parenthesis)exp));
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof VariableUse) {
+        _matched=true;
+        _switchResult = MathGenerator.computeVariableUse(((VariableUse)exp));
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof LetEnd) {
+        _matched=true;
+        _switchResult = MathGenerator.computeLetEnd(((LetEnd)exp));
+      }
+    }
+    if (!_matched) {
+      _switchResult = 0;
+    }
+    return _switchResult;
   }
   
   public static int computeVariableUse(final VariableUse use) {
@@ -86,11 +124,10 @@ public class MathGenerator extends AbstractGenerator {
   }
   
   public static int computeLetEnd(final LetEnd le) {
-    return 0;
-  }
-  
-  public static int computeIn(final In in) {
-    return 0;
+    final int leResult = MathGenerator.computeExp(le.getExp());
+    MathGenerator.variables.put(le.getName(), Integer.valueOf(leResult));
+    final int inResult = MathGenerator.computeExp(le.getIn());
+    return inResult;
   }
   
   public void displayPanel(final Map<String, Integer> result) {

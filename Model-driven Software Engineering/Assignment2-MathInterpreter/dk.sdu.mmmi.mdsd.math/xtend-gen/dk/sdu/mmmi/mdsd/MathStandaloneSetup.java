@@ -7,9 +7,8 @@ package dk.sdu.mmmi.mdsd;
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 @SuppressWarnings("all")
-public class MathStandaloneSetup /* implements MathStandaloneSetupGenerated  */{
+public class MathStandaloneSetup extends MathStandaloneSetupGenerated {
   public static void doSetup() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method createInjectorAndDoEMFRegistration() is undefined for the type MathStandaloneSetup");
+    new MathStandaloneSetup().createInjectorAndDoEMFRegistration();
   }
 }

@@ -10,7 +10,7 @@ Assignment:
 	'var' name=ID '=' exp=Exp
 ;
 
-Exp: PlusOrMinus | MultOrDiv | Primary;
+Exp: PlusOrMinus;
 
 PlusOrMinus returns Exp:
 	MultOrDiv (
@@ -27,10 +27,10 @@ MultOrDiv returns Exp:
 ;
 
 Primary returns Exp:
-	Litteral | Parenthesis | VariableUse
+	Litteral | Parenthesis | VariableUse | LetEnd
 ;
 
-Litteral returns Exp:
+Litteral:
 	value=INT
 ;
 
@@ -43,9 +43,5 @@ VariableUse:
 ;
 
 LetEnd:
-	'let' name=ID '=' exp=Exp in=In 'end'
-;
-
-In:
-	'in' exp=Exp
+	'let' name=ID '=' exp=Exp 'in' in=Exp 'end'
 ;

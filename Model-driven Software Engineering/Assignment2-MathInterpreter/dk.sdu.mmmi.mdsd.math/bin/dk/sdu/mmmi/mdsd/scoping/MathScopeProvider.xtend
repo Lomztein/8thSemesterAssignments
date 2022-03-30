@@ -3,6 +3,9 @@
  */
 package dk.sdu.mmmi.mdsd.scoping
 
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import dk.sdu.mmmi.mdsd.math.MathPackage
 
 /**
  * This class contains custom scoping description.
@@ -10,5 +13,15 @@ package dk.sdu.mmmi.mdsd.scoping
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping
  * on how and when to use it.
  */
+
 class MathScopeProvider extends AbstractMathScopeProvider {
+	val ePackage = MathPackage.eINSTANCE
+	
+	override getScope (EObject context, EReference reference) {
+		if (reference == ePackage.)
+	}
+	
+	def protected IScope scopeForLetInEnd(EObject context) {
+		
+	}
 }
