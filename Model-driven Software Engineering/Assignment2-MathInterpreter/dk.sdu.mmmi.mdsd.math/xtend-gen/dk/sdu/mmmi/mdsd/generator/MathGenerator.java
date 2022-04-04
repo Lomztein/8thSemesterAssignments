@@ -86,12 +86,6 @@ public class MathGenerator extends AbstractGenerator {
       }
     }
     if (!_matched) {
-      if (exp instanceof Litteral) {
-        _matched=true;
-        _switchResult = ((Litteral)exp).getValue();
-      }
-    }
-    if (!_matched) {
       if (exp instanceof Parenthesis) {
         _matched=true;
         _switchResult = MathGenerator.computeParenthesis(((Parenthesis)exp));
@@ -107,6 +101,12 @@ public class MathGenerator extends AbstractGenerator {
       if (exp instanceof LetEnd) {
         _matched=true;
         _switchResult = MathGenerator.computeLetEnd(((LetEnd)exp));
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof Litteral) {
+        _matched=true;
+        _switchResult = ((Litteral)exp).getValue();
       }
     }
     if (!_matched) {

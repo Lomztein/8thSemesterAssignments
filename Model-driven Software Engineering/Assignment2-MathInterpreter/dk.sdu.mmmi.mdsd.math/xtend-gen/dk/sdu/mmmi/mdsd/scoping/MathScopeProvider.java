@@ -3,11 +3,6 @@
  */
 package dk.sdu.mmmi.mdsd.scoping;
 
-import dk.sdu.mmmi.mdsd.math.MathPackage;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.xtext.scoping.IScope;
-
 /**
  * This class contains custom scoping description.
  * 
@@ -16,16 +11,4 @@ import org.eclipse.xtext.scoping.IScope;
  */
 @SuppressWarnings("all")
 public class MathScopeProvider extends AbstractMathScopeProvider {
-  private final MathPackage ePackage = MathPackage.eINSTANCE;
-  
-  @Override
-  public IScope getScope(final EObject context, final EReference reference) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nno viable alternative at input \')\'"
-      + "\nno viable alternative at input \'}\'");
-  }
-  
-  protected /* IScope */Object scopeForLetInEnd(final EObject context) {
-    return null;
-  }
 }

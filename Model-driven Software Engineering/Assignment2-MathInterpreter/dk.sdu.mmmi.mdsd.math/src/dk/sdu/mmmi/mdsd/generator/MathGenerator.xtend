@@ -21,8 +21,6 @@ import dk.sdu.mmmi.mdsd.math.Litteral
 import dk.sdu.mmmi.mdsd.math.VariableUse
 import dk.sdu.mmmi.mdsd.math.LetEnd
 import dk.sdu.mmmi.mdsd.math.Parenthesis
-import dk.sdu.mmmi.mdsd.math.In
-
 /**
  * Generates code from your model files on save.
  * 
@@ -62,10 +60,10 @@ class MathGenerator extends AbstractGenerator {
 			Minus: exp.left.computeExp - exp.right.computeExp
 			Mult: exp.left.computeExp * exp.right.computeExp
 			Div: exp.left.computeExp / exp.right.computeExp
-			Litteral: exp.value
 			Parenthesis: exp.computeParenthesis
 			VariableUse: exp.computeVariableUse
 			LetEnd: exp.computeLetEnd
+			Litteral: exp.value
 			default: 0
 		}
 	}
