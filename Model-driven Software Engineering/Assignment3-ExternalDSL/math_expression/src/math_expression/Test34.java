@@ -10,23 +10,44 @@ public class Test34 {
 	public int perimeterCircle;
 
 	private External external;
-	public void compute () {
-		sideA = 3;
-		sideB = 4;
-		IntSupplier letpowA = () -> { int powA = this.external.pow(sideA, 2); return letpowB.getAsInt();};
-		sideC = letpowA.getAsInt();
-		perimeterTriangle = sideA + sideB + sideC;
-		radius = 5;
-		IntSupplier letdiameter = () -> { int diameter = 2 + radius; return diameter + this.external.pi();};
-		perimeterCircle = letdiameter.getAsInt();
-	}
+
+	public Test34() { }
 
 
 	public Test34(External external) {
 		this.external = external;
 	}
 
-	interface External {
+	public void compute () {
+		IntSupplier letpowAsideC = () -> {
+			int powA = this.external.pow(this.sideA, 2);
+			IntSupplier letdiameterperimeterCircle = () -> {
+				int diameter = 2 * this.radius;
+				IntSupplier letpowBpowAsideC = () -> {
+					int powB = this.external.pow(this.sideB, 2);
+					return this.external.sqrt(powA + powB);
+				};
+				return diameter * this.external.pi();
+			};
+			IntSupplier letpowBpowAsideC = () -> {
+				int powB = this.external.pow(this.sideB, 2);
+				return this.external.sqrt(powA + powB);
+			};
+			return letpowBpowAsideC.getAsInt();
+		};
+		IntSupplier letdiameterperimeterCircle = () -> {
+			int diameter = 2 * this.radius;
+			return diameter * this.external.pi();
+		};
+		sideA = 3;
+		sideB = 4;
+		sideC = letpowAsideC.getAsInt();
+		perimeterTriangle = this.sideA + this.sideB + this.sideC;
+		radius = 5;
+		perimeterCircle = letdiameterperimeterCircle.getAsInt();
+	}
+
+	public interface External {
 
 		public int pow(int a, int b);
 		public int sqrt(int a);

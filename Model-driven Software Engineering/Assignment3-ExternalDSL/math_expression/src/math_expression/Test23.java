@@ -6,18 +6,24 @@ public class Test23 {
 	public int y;
 
 	private External external;
-	public void compute () {
-		x = 21;
-		IntSupplier leti = () -> { int i = 2; return i + x;};
-		y = leti.getAsInt();
-	}
+
+	public Test23() { }
 
 
 	public Test23(External external) {
 		this.external = external;
 	}
 
-	interface External {
+	public void compute () {
+		IntSupplier letiy = () -> {
+			int i = 2;
+			return i * x;
+		};
+		x = 21;
+		y = letiy.getAsInt();
+	}
+
+	public interface External {
 
 
 	}

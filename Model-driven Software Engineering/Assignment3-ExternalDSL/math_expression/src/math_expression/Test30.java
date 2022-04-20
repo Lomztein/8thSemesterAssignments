@@ -5,16 +5,19 @@ public class Test30 {
 	public int x;
 
 	private External external;
-	public void compute () {
-		x = this.external.sqrt(this.external.pow(this.external.pi(), 2));
-	}
+
+	public Test30() { }
 
 
 	public Test30(External external) {
 		this.external = external;
 	}
 
-	interface External {
+	public void compute () {
+		x = this.external.sqrt(this.external.pow(this.external.pi(), 2));
+	}
+
+	public interface External {
 
 		public int pow(int a, int b);
 		public int sqrt(int a);

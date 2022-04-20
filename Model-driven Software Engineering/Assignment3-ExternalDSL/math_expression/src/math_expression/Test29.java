@@ -6,17 +6,20 @@ public class Test29 {
 	public int y;
 
 	private External external;
-	public void compute () {
-		x = this.external.pow(4, 2);
-		y = x + 2;
-	}
+
+	public Test29() { }
 
 
 	public Test29(External external) {
 		this.external = external;
 	}
 
-	interface External {
+	public void compute () {
+		x = this.external.pow(4, 2);
+		y = this.x - 2;
+	}
+
+	public interface External {
 
 		public int pow(int a, int b);
 

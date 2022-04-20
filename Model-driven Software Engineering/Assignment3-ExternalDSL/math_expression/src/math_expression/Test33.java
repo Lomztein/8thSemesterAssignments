@@ -8,21 +8,34 @@ public class Test33 {
 	public int d;
 
 	private External external;
-	public void compute () {
-		a = 40;
-		IntSupplier leti = () -> { int i = 2; return a + i;};
-		b = leti.getAsInt();
-		c = b + 3;
-		IntSupplier leti = () -> { int i = 4; return c + i;};
-		d = leti.getAsInt();
-	}
+
+	public Test33() { }
 
 
 	public Test33(External external) {
 		this.external = external;
 	}
 
-	interface External {
+	public void compute () {
+		IntSupplier letib = () -> {
+			int i = 2;
+			IntSupplier letid = () -> {
+				int i = 4;
+				return c + i;
+			};
+			return a * i;
+		};
+		IntSupplier letid = () -> {
+			int i = 4;
+			return c + i;
+		};
+		a = 40;
+		b = letib.getAsInt();
+		c = this.b * 3;
+		d = letid.getAsInt();
+	}
+
+	public interface External {
 
 
 	}

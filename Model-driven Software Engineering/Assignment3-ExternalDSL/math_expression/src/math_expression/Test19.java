@@ -5,17 +5,27 @@ public class Test19 {
 	public int x;
 
 	private External external;
-	public void compute () {
-		IntSupplier lety = () -> { int y = 2; return letz.getAsInt() + y;};
-		x = lety.getAsInt() + 79;
-	}
+
+	public Test19() { }
 
 
 	public Test19(External external) {
 		this.external = external;
 	}
 
-	interface External {
+	public void compute () {
+		IntSupplier letyx = () -> {
+			int y = 2;
+			IntSupplier letzyx = () -> {
+				int z = 3;
+				return y * z;
+			};
+			return letzyx.getAsInt() + y;
+		};
+		x = letyx.getAsInt() + 79;
+	}
+
+	public interface External {
 
 
 	}

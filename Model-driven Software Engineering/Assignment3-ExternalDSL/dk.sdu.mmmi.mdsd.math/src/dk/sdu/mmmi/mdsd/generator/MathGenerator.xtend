@@ -25,6 +25,8 @@ import dk.sdu.mmmi.mdsd.math.Expression
 import dk.sdu.mmmi.mdsd.math.Parenthesis
 import dk.sdu.mmmi.mdsd.math.ExternalCall
 import java.util.ArrayList
+import java.util.List
+import dk.sdu.mmmi.mdsd.math.Binding
 
 /**
  * Generates code from your model files on save.
@@ -54,8 +56,10 @@ class MathGenerator extends AbstractGenerator {
 		builder.appendLine("package math_expression;\nimport java.util.function.IntSupplier;\npublic class " + className + " {\n");
 		generateFields(builder, math, 1);
 		builder.appendLine("\n\tprivate External external;")
-		generateComputeFunction(builder, math, 1);
+		builder.appendLine("\n\tpublic " + className + "() { }\n")
 		builder.appendLine("\n\tpublic " + className + "(External external) {\n\t\tthis.external = external;\n\t}\n")
+		val lets = new ArrayList<LetBinding>()
+		generateComputeFunction(builder, math, 1);
 		generateExternalInterface(builder, math, 1)
 		builder.appendLine("}")
 	}
@@ -65,61 +69,77 @@ class MathGenerator extends AbstractGenerator {
 			builder.appendLine(indents.asIndents + "public int " + varBinding.name + ";");
 	}
 	
+	def static void generateLetFunctions (StringBuilder builder, List<LetBinding> lets, int indents) {
+		val cur = new ArrayList<LetBinding>(lets);
+		for (binding: cur) {
+			lets.remove(binding);
+			generateLetFunction(builder, binding, indents, lets);
+		}
+	}
+	
+	def static void generateLetFunction (StringBuilder builder, LetBinding binding, int indents, List<LetBinding> lets) {
+		val localBuilder = new StringBuilder();
+		
+		builder.appendLine(indents.asIndents + "IntSupplier let" + binding.fullyQualifiedName + " = () -> {");
+		builder.appendLine(indents.asIndents + "\tint " + binding.name + " = " + binding.binding.generateExpression(lets, true) + ";");
+		localBuilder.appendLine(indents.asIndents + "\treturn " + binding.body.generateExpression(lets, false) + ";");		
+		localBuilder.appendLine(indents.asIndents + "};");
+		
+		if (lets.size() > 0) {
+			generateLetFunctions(builder, lets, indents + 1);
+		}
+		
+		builder.append(localBuilder.toString());
+	}
+	
 	def static void generateComputeFunction (StringBuilder builder, MathExp math, int indents) {
 		builder.appendLine(indents.asIndents + "public void compute () {");
+		val localBuilder = new StringBuilder();
+		val lets = new ArrayList<LetBinding>()
 		for (varBinding: math.variables) {
-			val letList = new ArrayList<LetBinding>()
-			val statementBuilder = new StringBuilder();
-			generateComputeStatement(statementBuilder, varBinding, indents + 1, letList);
-			
-			for (let: letList) {
-				generateLetLambdaFunction (builder, let, indents + 1);
-			}
-			builder.append(statementBuilder.toString());
+			generateComputeStatement(localBuilder, varBinding, indents + 1, lets);
 		}
+		if (lets.size() > 0) {
+			generateLetFunctions(builder, lets, indents + 1);
+		}
+		builder.append(localBuilder.toString());
 		builder.appendLine(indents.asIndents + "}\n");
 	}
 	
-	def static void generateLetLambdaFunction (StringBuilder builder, LetBinding binding, int indents) {
-		val dummyList = new ArrayList<LetBinding>();
-		builder.appendLine(indents.asIndents + "IntSupplier let" + binding.name + " = () -> { int " + binding.name + " = " + binding.binding.generateExpression(dummyList) + "; return " + binding.body.generateExpression(dummyList) + ";};");
+	def static void generateComputeStatement (StringBuilder builder, VarBinding binding, int indents, List<LetBinding> lets) {
+		builder.appendLine(indents.asIndents + binding.name + " = " + binding.expression.generateExpression(lets, true) + ";");
 	}
 	
-	def static void generateComputeStatement (StringBuilder builder, VarBinding binding, int indents, ArrayList<LetBinding> lets) {
-		builder.appendLine(indents.asIndents + binding.name + " = " + binding.expression.generateExpression(lets) + ";");
-	}
-	
-	def static String generateExpression(Expression exp, ArrayList<LetBinding> lets) {
+	def static String generateExpression(Expression exp, List<LetBinding> lets, boolean forceThis) {
 		switch exp {
-			Plus: exp.left.generateExpression(lets) + " + " + exp.right.generateExpression(lets)
-			Minus: exp.left.generateExpression(lets) + " + " + exp.right.generateExpression(lets)
-			Mult: exp.left.generateExpression(lets) + " + " + exp.right.generateExpression(lets)
-			Div: exp.left.generateExpression(lets) + " + " + exp.right.generateExpression(lets)
-			Parenthesis: "(" + exp.exp + ")"
-			VariableUse: exp.ref.name
+			Plus: exp.left.generateExpression(lets, forceThis) + " + " + exp.right.generateExpression(lets, forceThis)
+			Minus: exp.left.generateExpression(lets, forceThis) + " - " + exp.right.generateExpression(lets, forceThis)
+			Mult: exp.left.generateExpression(lets, forceThis) + " * " + exp.right.generateExpression(lets, forceThis)
+			Div: exp.left.generateExpression(lets, forceThis) + " / " + exp.right.generateExpression(lets, forceThis)
+			Parenthesis: "(" + exp.exp.generateExpression(lets, forceThis) + ")"
+			VariableUse: forceThis ? "this." + exp.ref.name : exp.ref.name
 			MathNumber: exp.value.toString()
 			LetBinding: exp.generateLetBinding(lets)
-			ExternalCall: exp.generateExternalCall(lets)
+			ExternalCall: exp.generateExternalCall(lets, forceThis)
 		}
 	}
 	
-	def static String generateLetBinding(LetBinding binding, ArrayList<LetBinding> lets) {
+	def static String generateLetBinding(LetBinding binding, List<LetBinding> lets) {
 		if (!lets.contains(binding)) {
 			lets.add(binding)
-			binding.binding.generateExpression(lets)
 		}else{
 			return binding.name
 		}
-		return "let" + binding.name + ".getAsInt()";
+		return "let" + binding.fullyQualifiedName + ".getAsInt()";
 	}
 	
-	def static String generateExternalCall (ExternalCall call, ArrayList<LetBinding> lets) {
+	def static String generateExternalCall (ExternalCall call, List<LetBinding> lets, boolean forceThis) {
 		var index = 0;
 		val builder = new StringBuilder();
 		builder.append("this.external." + call.func.name + "(");
 		for (arg: call.args) {
 			index++;
-			builder.append(arg.generateExpression(lets));
+			builder.append(arg.generateExpression(lets, forceThis));
 			if (index != call.args.size()) {
 				builder.append(", ");
 			}
@@ -128,8 +148,20 @@ class MathGenerator extends AbstractGenerator {
 		return builder.toString();
 	}
 	
+	def static String fullyQualifiedName (LetBinding binding) {
+		var name = binding.name;
+		var container = binding.eContainer;
+		while (container !== null) {
+			if (container instanceof Binding) {
+				name += container.name;
+			}
+			container = container.eContainer;
+		}
+		return name;
+	}
+	
 	def static void generateExternalInterface(StringBuilder builder, MathExp math, int indents) {
-		builder.appendLine(indents.asIndents + "interface External {\n");
+		builder.appendLine(indents.asIndents + "public interface External {\n");
 		for (definition: math.externals) {
 			generateExternalDefintion(builder, definition, indents + 1);
 		}

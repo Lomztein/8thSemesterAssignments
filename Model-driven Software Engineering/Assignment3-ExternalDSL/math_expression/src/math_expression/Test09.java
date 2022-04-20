@@ -5,16 +5,19 @@ public class Test09 {
 	public int x;
 
 	private External external;
-	public void compute () {
-		x = 5 + 4 + 6;
-	}
+
+	public Test09() { }
 
 
 	public Test09(External external) {
 		this.external = external;
 	}
 
-	interface External {
+	public void compute () {
+		x = 5 * 4 * 6;
+	}
+
+	public interface External {
 
 
 	}
