@@ -15,12 +15,9 @@ public class Test31 {
 	}
 
 	public void compute () {
-		IntSupplier letiy = () -> {
-			int i = this.x;
-			return i - 3;
-		};
 		x = 5;
-		y = 2 + this.external.pow(letiy.getAsInt(), 3 * 2);
+		int iy = x;
+		y = 2 + this.external.pow(iy - 3, 3 * 2);
 	}
 
 	public interface External {

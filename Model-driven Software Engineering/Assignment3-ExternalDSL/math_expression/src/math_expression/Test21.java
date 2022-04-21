@@ -16,7 +16,7 @@ public class Test21 {
 
 	public void compute () {
 		x = 42;
-		y = this.x;
+		y = x;
 	}
 
 	public interface External {

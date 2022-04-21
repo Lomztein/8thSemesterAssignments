@@ -14,15 +14,9 @@ public class Test19 {
 	}
 
 	public void compute () {
-		IntSupplier letyx = () -> {
-			int y = 2;
-			IntSupplier letzyx = () -> {
-				int z = 3;
-				return y * z;
-			};
-			return letzyx.getAsInt() + y;
-		};
-		x = letyx.getAsInt() + 79;
+		int yx = 2;
+		int zyx = 3;
+		x = yx * zyx + yx + 79;
 	}
 
 	public interface External {

@@ -17,22 +17,12 @@ public class Test33 {
 	}
 
 	public void compute () {
-		IntSupplier letib = () -> {
-			int i = 2;
-			IntSupplier letid = () -> {
-				int i = 4;
-				return c + i;
-			};
-			return a * i;
-		};
-		IntSupplier letid = () -> {
-			int i = 4;
-			return c + i;
-		};
 		a = 40;
-		b = letib.getAsInt();
-		c = this.b * 3;
-		d = letid.getAsInt();
+		int ib = 2;
+		b = a * ib;
+		c = b * 3;
+		int id = 4;
+		d = c + id;
 	}
 
 	public interface External {

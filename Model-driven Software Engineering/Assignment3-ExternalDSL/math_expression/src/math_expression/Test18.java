@@ -14,11 +14,8 @@ public class Test18 {
 	}
 
 	public void compute () {
-		IntSupplier letyx = () -> {
-			int y = 10 * 8;
-			return y + 7;
-		};
-		x = letyx.getAsInt();
+		int yx = 10 * 8;
+		x = yx + 7;
 	}
 
 	public interface External {

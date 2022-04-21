@@ -16,7 +16,7 @@ public class Test29 {
 
 	public void compute () {
 		x = this.external.pow(4, 2);
-		y = this.x - 2;
+		y = x - 2;
 	}
 
 	public interface External {

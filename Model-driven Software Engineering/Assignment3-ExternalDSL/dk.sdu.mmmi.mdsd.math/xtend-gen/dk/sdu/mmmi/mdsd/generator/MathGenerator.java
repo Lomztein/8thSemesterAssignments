@@ -23,8 +23,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import javax.swing.JOptionPane;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -79,46 +77,40 @@ public class MathGenerator extends AbstractGenerator {
     }
   }
   
-  public static void generateLetFunctions(final StringBuilder builder, final List<LetBinding> lets, final int indents) {
+  public static void generateLetExpressions(final StringBuilder builder, final List<LetBinding> lets, final int indents) {
     final ArrayList<LetBinding> cur = new ArrayList<LetBinding>(lets);
     for (final LetBinding binding : cur) {
-      {
-        lets.remove(binding);
-        MathGenerator.generateLetFunction(builder, binding, indents, lets);
-      }
+      lets.remove(binding);
+    }
+    for (final LetBinding binding_1 : cur) {
+      MathGenerator.generateLetExpression(builder, binding_1, indents, lets);
     }
   }
   
-  public static void generateLetFunction(final StringBuilder builder, final LetBinding binding, final int indents, final List<LetBinding> lets) {
+  public static void generateLetExpression(final StringBuilder builder, final LetBinding binding, final int indents, final List<LetBinding> lets) {
     final StringBuilder localBuilder = new StringBuilder();
     String _asIndents = MathGenerator.asIndents(indents);
-    String _plus = (_asIndents + "IntSupplier let");
+    String _plus = (_asIndents + "int ");
     String _fullyQualifiedName = MathGenerator.fullyQualifiedName(binding);
     String _plus_1 = (_plus + _fullyQualifiedName);
-    String _plus_2 = (_plus_1 + " = () -> {");
-    MathGenerator.appendLine(builder, _plus_2);
+    String _plus_2 = (_plus_1 + " = ");
+    String _generateExpression = MathGenerator.generateExpression(binding.getBinding(), builder, indents);
+    String _plus_3 = (_plus_2 + _generateExpression);
+    String _plus_4 = (_plus_3 + ";");
+    MathGenerator.appendLine(builder, _plus_4);
     String _asIndents_1 = MathGenerator.asIndents(indents);
-    String _plus_3 = (_asIndents_1 + "\tint ");
-    String _name = binding.getName();
-    String _plus_4 = (_plus_3 + _name);
-    String _plus_5 = (_plus_4 + " = ");
-    String _generateExpression = MathGenerator.generateExpression(binding.getBinding(), lets, true);
-    String _plus_6 = (_plus_5 + _generateExpression);
-    String _plus_7 = (_plus_6 + ";");
-    MathGenerator.appendLine(builder, _plus_7);
-    String _asIndents_2 = MathGenerator.asIndents(indents);
-    String _plus_8 = (_asIndents_2 + "\treturn ");
-    String _generateExpression_1 = MathGenerator.generateExpression(binding.getBody(), lets, false);
-    String _plus_9 = (_plus_8 + _generateExpression_1);
-    String _plus_10 = (_plus_9 + ";");
-    MathGenerator.appendLine(localBuilder, _plus_10);
-    String _asIndents_3 = MathGenerator.asIndents(indents);
-    String _plus_11 = (_asIndents_3 + "};");
-    MathGenerator.appendLine(localBuilder, _plus_11);
+    String _plus_5 = (_asIndents_1 + "int ");
+    String _fullyQualifiedName_1 = MathGenerator.fullyQualifiedName(binding);
+    String _plus_6 = (_plus_5 + _fullyQualifiedName_1);
+    String _plus_7 = (_plus_6 + "return = ");
+    String _generateExpression_1 = MathGenerator.generateExpression(binding.getBody(), builder, indents);
+    String _plus_8 = (_plus_7 + _generateExpression_1);
+    String _plus_9 = (_plus_8 + ";");
+    MathGenerator.appendLine(localBuilder, _plus_9);
     int _size = lets.size();
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
-      MathGenerator.generateLetFunctions(builder, lets, (indents + 1));
+      MathGenerator.generateLetExpressions(builder, lets, indents);
     }
     builder.append(localBuilder.toString());
   }
@@ -128,15 +120,9 @@ public class MathGenerator extends AbstractGenerator {
     String _plus = (_asIndents + "public void compute () {");
     MathGenerator.appendLine(builder, _plus);
     final StringBuilder localBuilder = new StringBuilder();
-    final ArrayList<LetBinding> lets = new ArrayList<LetBinding>();
     EList<VarBinding> _variables = math.getVariables();
     for (final VarBinding varBinding : _variables) {
-      MathGenerator.generateComputeStatement(localBuilder, varBinding, (indents + 1), lets);
-    }
-    int _size = lets.size();
-    boolean _greaterThan = (_size > 0);
-    if (_greaterThan) {
-      MathGenerator.generateLetFunctions(builder, lets, (indents + 1));
+      MathGenerator.generateComputeStatement(localBuilder, varBinding, (indents + 1));
     }
     builder.append(localBuilder.toString());
     String _asIndents_1 = MathGenerator.asIndents(indents);
@@ -144,58 +130,58 @@ public class MathGenerator extends AbstractGenerator {
     MathGenerator.appendLine(builder, _plus_1);
   }
   
-  public static void generateComputeStatement(final StringBuilder builder, final VarBinding binding, final int indents, final List<LetBinding> lets) {
+  public static void generateComputeStatement(final StringBuilder builder, final VarBinding binding, final int indents) {
     String _asIndents = MathGenerator.asIndents(indents);
     String _name = binding.getName();
     String _plus = (_asIndents + _name);
     String _plus_1 = (_plus + " = ");
-    String _generateExpression = MathGenerator.generateExpression(binding.getExpression(), lets, true);
+    String _generateExpression = MathGenerator.generateExpression(binding.getExpression(), builder, indents);
     String _plus_2 = (_plus_1 + _generateExpression);
     String _plus_3 = (_plus_2 + ";");
     MathGenerator.appendLine(builder, _plus_3);
   }
   
-  public static String generateExpression(final Expression exp, final List<LetBinding> lets, final boolean forceThis) {
+  public static String generateExpression(final Expression exp, final StringBuilder builder, final int indents) {
     String _switchResult = null;
     boolean _matched = false;
     if (exp instanceof Plus) {
       _matched=true;
-      String _generateExpression = MathGenerator.generateExpression(((Plus)exp).getLeft(), lets, forceThis);
+      String _generateExpression = MathGenerator.generateExpression(((Plus)exp).getLeft(), builder, indents);
       String _plus = (_generateExpression + " + ");
-      String _generateExpression_1 = MathGenerator.generateExpression(((Plus)exp).getRight(), lets, forceThis);
+      String _generateExpression_1 = MathGenerator.generateExpression(((Plus)exp).getRight(), builder, indents);
       _switchResult = (_plus + _generateExpression_1);
     }
     if (!_matched) {
       if (exp instanceof Minus) {
         _matched=true;
-        String _generateExpression = MathGenerator.generateExpression(((Minus)exp).getLeft(), lets, forceThis);
+        String _generateExpression = MathGenerator.generateExpression(((Minus)exp).getLeft(), builder, indents);
         String _plus = (_generateExpression + " - ");
-        String _generateExpression_1 = MathGenerator.generateExpression(((Minus)exp).getRight(), lets, forceThis);
+        String _generateExpression_1 = MathGenerator.generateExpression(((Minus)exp).getRight(), builder, indents);
         _switchResult = (_plus + _generateExpression_1);
       }
     }
     if (!_matched) {
       if (exp instanceof Mult) {
         _matched=true;
-        String _generateExpression = MathGenerator.generateExpression(((Mult)exp).getLeft(), lets, forceThis);
+        String _generateExpression = MathGenerator.generateExpression(((Mult)exp).getLeft(), builder, indents);
         String _plus = (_generateExpression + " * ");
-        String _generateExpression_1 = MathGenerator.generateExpression(((Mult)exp).getRight(), lets, forceThis);
+        String _generateExpression_1 = MathGenerator.generateExpression(((Mult)exp).getRight(), builder, indents);
         _switchResult = (_plus + _generateExpression_1);
       }
     }
     if (!_matched) {
       if (exp instanceof Div) {
         _matched=true;
-        String _generateExpression = MathGenerator.generateExpression(((Div)exp).getLeft(), lets, forceThis);
+        String _generateExpression = MathGenerator.generateExpression(((Div)exp).getLeft(), builder, indents);
         String _plus = (_generateExpression + " / ");
-        String _generateExpression_1 = MathGenerator.generateExpression(((Div)exp).getRight(), lets, forceThis);
+        String _generateExpression_1 = MathGenerator.generateExpression(((Div)exp).getRight(), builder, indents);
         _switchResult = (_plus + _generateExpression_1);
       }
     }
     if (!_matched) {
       if (exp instanceof Parenthesis) {
         _matched=true;
-        String _generateExpression = MathGenerator.generateExpression(((Parenthesis)exp).getExp(), lets, forceThis);
+        String _generateExpression = MathGenerator.generateExpression(((Parenthesis)exp).getExp(), builder, indents);
         String _plus = ("(" + _generateExpression);
         _switchResult = (_plus + ")");
       }
@@ -203,14 +189,7 @@ public class MathGenerator extends AbstractGenerator {
     if (!_matched) {
       if (exp instanceof VariableUse) {
         _matched=true;
-        String _xifexpression = null;
-        if (forceThis) {
-          String _name = ((VariableUse)exp).getRef().getName();
-          _xifexpression = ("this." + _name);
-        } else {
-          _xifexpression = ((VariableUse)exp).getRef().getName();
-        }
-        _switchResult = _xifexpression;
+        _switchResult = MathGenerator.fullyQualifiedName(((VariableUse)exp).getRef());
       }
     }
     if (!_matched) {
@@ -222,55 +201,63 @@ public class MathGenerator extends AbstractGenerator {
     if (!_matched) {
       if (exp instanceof LetBinding) {
         _matched=true;
-        _switchResult = MathGenerator.generateLetBinding(((LetBinding)exp), lets);
+        _switchResult = MathGenerator.generateLetBinding(((LetBinding)exp), builder, indents);
       }
     }
     if (!_matched) {
       if (exp instanceof ExternalCall) {
         _matched=true;
-        _switchResult = MathGenerator.generateExternalCall(((ExternalCall)exp), lets, forceThis);
+        _switchResult = MathGenerator.generateExternalCall(((ExternalCall)exp), builder, indents);
       }
     }
     return _switchResult;
   }
   
-  public static String generateLetBinding(final LetBinding binding, final List<LetBinding> lets) {
-    boolean _contains = lets.contains(binding);
-    boolean _not = (!_contains);
-    if (_not) {
-      lets.add(binding);
-    } else {
-      return binding.getName();
-    }
+  public static String generateLetBinding(final LetBinding binding, final StringBuilder builder, final int indents) {
+    String _asIndents = MathGenerator.asIndents(indents);
+    String _plus = (_asIndents + "int ");
     String _fullyQualifiedName = MathGenerator.fullyQualifiedName(binding);
-    String _plus = ("let" + _fullyQualifiedName);
-    return (_plus + ".getAsInt()");
+    String _plus_1 = (_plus + _fullyQualifiedName);
+    String _plus_2 = (_plus_1 + " = ");
+    String _generateExpression = MathGenerator.generateExpression(binding.getBinding(), builder, indents);
+    String _plus_3 = (_plus_2 + _generateExpression);
+    final String prevLine = (_plus_3 + ";");
+    int _lastNewLine = MathGenerator.lastNewLine(builder);
+    int _plus_4 = (_lastNewLine + 1);
+    builder.insert(_plus_4, (prevLine + "\n"));
+    return MathGenerator.generateExpression(binding.getBody(), builder, indents);
   }
   
-  public static String generateExternalCall(final ExternalCall call, final List<LetBinding> lets, final boolean forceThis) {
+  public static int lastNewLine(final StringBuilder builder) {
+    return builder.lastIndexOf("\n");
+  }
+  
+  public static String generateExternalCall(final ExternalCall call, final StringBuilder builder, final int indents) {
     int index = 0;
-    final StringBuilder builder = new StringBuilder();
+    final int start = builder.length();
+    String _string = builder.toString();
+    final StringBuilder localBuilder = new StringBuilder(_string);
     String _name = call.getFunc().getName();
     String _plus = ("this.external." + _name);
     String _plus_1 = (_plus + "(");
-    builder.append(_plus_1);
+    localBuilder.append(_plus_1);
     EList<Expression> _args = call.getArgs();
     for (final Expression arg : _args) {
       {
         index++;
-        builder.append(MathGenerator.generateExpression(arg, lets, forceThis));
+        localBuilder.append(MathGenerator.generateExpression(arg, builder, indents));
         int _size = call.getArgs().size();
         boolean _notEquals = (index != _size);
         if (_notEquals) {
-          builder.append(", ");
+          localBuilder.append(", ");
         }
       }
     }
-    builder.append(")");
-    return builder.toString();
+    localBuilder.append(")");
+    return localBuilder.substring(start);
   }
   
-  public static String fullyQualifiedName(final LetBinding binding) {
+  public static String fullyQualifiedName(final Binding binding) {
     String name = binding.getName();
     EObject container = binding.eContainer();
     while ((container != null)) {
@@ -335,21 +322,5 @@ public class MathGenerator extends AbstractGenerator {
       builder.append("\t");
     }
     return builder.toString();
-  }
-  
-  public void displayPanel(final Map<String, Integer> result) {
-    String resultString = "";
-    Set<Map.Entry<String, Integer>> _entrySet = result.entrySet();
-    for (final Map.Entry<String, Integer> entry : _entrySet) {
-      String _resultString = resultString;
-      String _key = entry.getKey();
-      String _plus = ("var " + _key);
-      String _plus_1 = (_plus + " = ");
-      Integer _value = entry.getValue();
-      String _plus_2 = (_plus_1 + _value);
-      String _plus_3 = (_plus_2 + "\n");
-      resultString = (_resultString + _plus_3);
-    }
-    JOptionPane.showMessageDialog(null, resultString, "Math Language", JOptionPane.INFORMATION_MESSAGE);
   }
 }

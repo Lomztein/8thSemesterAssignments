@@ -15,12 +15,9 @@ public class Test24 {
 	}
 
 	public void compute () {
-		IntSupplier letiy = () -> {
-			int i = this.x;
-			return i * 2;
-		};
 		x = 21;
-		y = letiy.getAsInt();
+		int iy = x;
+		y = iy * 2;
 	}
 
 	public interface External {

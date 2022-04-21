@@ -69,24 +69,24 @@ class MathGenerator extends AbstractGenerator {
 			builder.appendLine(indents.asIndents + "public int " + varBinding.name + ";");
 	}
 	
-	def static void generateLetFunctions (StringBuilder builder, List<LetBinding> lets, int indents) {
+	def static void generateLetExpressions (StringBuilder builder, List<LetBinding> lets, int indents) {
 		val cur = new ArrayList<LetBinding>(lets);
 		for (binding: cur) {
 			lets.remove(binding);
-			generateLetFunction(builder, binding, indents, lets);
+		}
+		for (binding: cur) {
+			generateLetExpression(builder, binding, indents, lets);
 		}
 	}
 	
-	def static void generateLetFunction (StringBuilder builder, LetBinding binding, int indents, List<LetBinding> lets) {
+	def static void generateLetExpression (StringBuilder builder, LetBinding binding, int indents, List<LetBinding> lets) {
 		val localBuilder = new StringBuilder();
 		
-		builder.appendLine(indents.asIndents + "IntSupplier let" + binding.fullyQualifiedName + " = () -> {");
-		builder.appendLine(indents.asIndents + "\tint " + binding.name + " = " + binding.binding.generateExpression(lets, true) + ";");
-		localBuilder.appendLine(indents.asIndents + "\treturn " + binding.body.generateExpression(lets, false) + ";");		
-		localBuilder.appendLine(indents.asIndents + "};");
+		builder.appendLine(indents.asIndents + "int " + binding.fullyQualifiedName + " = " + binding.binding.generateExpression(builder, indents) + ";");
+		localBuilder.appendLine(indents.asIndents + "int " + binding.fullyQualifiedName + "return = " + binding.body.generateExpression(builder, indents) + ";");		
 		
 		if (lets.size() > 0) {
-			generateLetFunctions(builder, lets, indents + 1);
+			generateLetExpressions(builder, lets, indents);
 		}
 		
 		builder.append(localBuilder.toString());
@@ -95,60 +95,58 @@ class MathGenerator extends AbstractGenerator {
 	def static void generateComputeFunction (StringBuilder builder, MathExp math, int indents) {
 		builder.appendLine(indents.asIndents + "public void compute () {");
 		val localBuilder = new StringBuilder();
-		val lets = new ArrayList<LetBinding>()
 		for (varBinding: math.variables) {
-			generateComputeStatement(localBuilder, varBinding, indents + 1, lets);
-		}
-		if (lets.size() > 0) {
-			generateLetFunctions(builder, lets, indents + 1);
+			generateComputeStatement(localBuilder, varBinding, indents + 1);
 		}
 		builder.append(localBuilder.toString());
 		builder.appendLine(indents.asIndents + "}\n");
 	}
 	
-	def static void generateComputeStatement (StringBuilder builder, VarBinding binding, int indents, List<LetBinding> lets) {
-		builder.appendLine(indents.asIndents + binding.name + " = " + binding.expression.generateExpression(lets, true) + ";");
+	def static void generateComputeStatement (StringBuilder builder, VarBinding binding, int indents) {
+		builder.appendLine(indents.asIndents + binding.name + " = " + binding.expression.generateExpression(builder, indents) + ";");
 	}
 	
-	def static String generateExpression(Expression exp, List<LetBinding> lets, boolean forceThis) {
+	def static String generateExpression(Expression exp, StringBuilder builder, int indents) {
 		switch exp {
-			Plus: exp.left.generateExpression(lets, forceThis) + " + " + exp.right.generateExpression(lets, forceThis)
-			Minus: exp.left.generateExpression(lets, forceThis) + " - " + exp.right.generateExpression(lets, forceThis)
-			Mult: exp.left.generateExpression(lets, forceThis) + " * " + exp.right.generateExpression(lets, forceThis)
-			Div: exp.left.generateExpression(lets, forceThis) + " / " + exp.right.generateExpression(lets, forceThis)
-			Parenthesis: "(" + exp.exp.generateExpression(lets, forceThis) + ")"
-			VariableUse: forceThis ? "this." + exp.ref.name : exp.ref.name
+			Plus: exp.left.generateExpression(builder, indents) + " + " + exp.right.generateExpression(builder, indents)
+			Minus: exp.left.generateExpression(builder, indents) + " - " + exp.right.generateExpression(builder, indents)
+			Mult: exp.left.generateExpression(builder, indents)+ " * " + exp.right.generateExpression(builder, indents)
+			Div: exp.left.generateExpression(builder, indents) + " / " + exp.right.generateExpression(builder, indents)
+			Parenthesis: "(" + exp.exp.generateExpression(builder, indents) + ")"
+			VariableUse: exp.ref.fullyQualifiedName
 			MathNumber: exp.value.toString()
-			LetBinding: exp.generateLetBinding(lets)
-			ExternalCall: exp.generateExternalCall(lets, forceThis)
+			LetBinding: exp.generateLetBinding(builder, indents)
+			ExternalCall: exp.generateExternalCall(builder, indents)
 		}
 	}
 	
-	def static String generateLetBinding(LetBinding binding, List<LetBinding> lets) {
-		if (!lets.contains(binding)) {
-			lets.add(binding)
-		}else{
-			return binding.name
-		}
-		return "let" + binding.fullyQualifiedName + ".getAsInt()";
+	def static String generateLetBinding(LetBinding binding, StringBuilder builder, int indents) {
+		val prevLine = indents.asIndents + "int " + binding.fullyQualifiedName + " = " + binding.binding.generateExpression(builder, indents) + ";"
+		builder.insert(builder.lastNewLine + 1, prevLine + "\n");
+		return binding.body.generateExpression(builder, indents);
 	}
 	
-	def static String generateExternalCall (ExternalCall call, List<LetBinding> lets, boolean forceThis) {
+	def static lastNewLine(StringBuilder builder) {
+		return builder.lastIndexOf("\n")
+	}
+	
+	def static String generateExternalCall (ExternalCall call, StringBuilder builder, int indents) {
 		var index = 0;
-		val builder = new StringBuilder();
-		builder.append("this.external." + call.func.name + "(");
+		val start = builder.length();
+		val localBuilder = new StringBuilder(builder.toString());
+		localBuilder.append("this.external." + call.func.name + "(");
 		for (arg: call.args) {
 			index++;
-			builder.append(arg.generateExpression(lets, forceThis));
+			localBuilder.append(arg.generateExpression(builder, indents));
 			if (index != call.args.size()) {
-				builder.append(", ");
+				localBuilder.append(", ");
 			}
 		}
-		builder.append(")");
-		return builder.toString();
+		localBuilder.append(")");
+		return localBuilder.substring(start);
 	}
 	
-	def static String fullyQualifiedName (LetBinding binding) {
+	def static String fullyQualifiedName (Binding binding) {
 		var name = binding.name;
 		var container = binding.eContainer;
 		while (container !== null) {
@@ -189,14 +187,4 @@ class MathGenerator extends AbstractGenerator {
 		}
 		return builder.toString();
 	}
-	
-	def void displayPanel(Map<String, Integer> result) {
-		var resultString = ""
-		for (entry : result.entrySet()) {
-         	resultString += "var " + entry.getKey() + " = " + entry.getValue() + "\n"
-        }
-		
-		JOptionPane.showMessageDialog(null, resultString ,"Math Language", JOptionPane.INFORMATION_MESSAGE)
-	}
-	
 }

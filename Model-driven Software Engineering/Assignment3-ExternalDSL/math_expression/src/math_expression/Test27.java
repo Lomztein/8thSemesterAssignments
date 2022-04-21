@@ -16,7 +16,7 @@ public class Test27 {
 
 	public void compute () {
 		x = this.external.pi();
-		y = this.x + 2;
+		y = x + 2;
 	}
 
 	public interface External {
