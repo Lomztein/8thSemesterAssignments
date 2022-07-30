@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.emf.ecore.generated_package">
+		<package
+			uri = "http://www.mdsd.lomzt/exam/IF22"
+			class = "lomzt.mdsd.exam.iF22.IF22Package"
+			genModel = "model/generated/IF22.genmodel" />
+	</extension>
+</plugin>

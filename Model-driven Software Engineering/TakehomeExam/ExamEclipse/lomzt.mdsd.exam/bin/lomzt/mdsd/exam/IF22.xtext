@@ -1,0 +1,103 @@
+grammar lomzt.mdsd.exam.IF22 with org.eclipse.xtext.common.Terminals
+
+generate iF22 "http://www.mdsd.lomzt/exam/IF22"
+
+Story:
+	'story' name=ID
+	imports += ExternalImport*
+	scenarios += Scenario*
+;
+
+ExternalImport:
+	'function' name=ID '(' params += Type? (',' params += Type)* ')' ':' returnType = Type
+;
+
+Type:
+	{Number} 'number' | {Boolean} 'boolean' | {Text} 'text'
+;
+
+Scenario:
+	'scenario' name=ID ('(' params += Parameter (',' params += Parameter)* ')')? '{'
+	bindings += VarBinding*
+	locations += Location+
+	'}'
+;
+
+Parameter: 
+	name=ID ':' type=Type
+;
+
+Location:
+	Announce | Question | End
+;
+
+Announce:
+	'announce' name=ID (text=Exp)?  targets += Target+
+;
+
+Question:
+	'question' name=ID (text=Exp)? 'as' validate=Exp ('in' binding=[VarBinding])? targets += Target+
+;
+
+End:
+	'end' name=ID (text=Exp)?
+;
+
+Target: 
+	'to' target=[Targetable] ('('( args+=Exp (',' args+=Exp)*)? ')')? ('if' condition=Exp)? ('{' endingTargets += EndingTarget+ '}')?
+;
+
+Targetable:
+	Scenario | Location
+;
+
+EndingTarget: 
+	'on' from=[Location] target=Target
+;
+
+// These expressions are based on the grammar from the semester project, with some modifications to implement the concatonation thingies, as well as some refactoring.
+Exp returns Expression:
+	EqualsOrNotEquals (({And.left=current} '&&' | {Or.left=current}  '||' ) right=EqualsOrNotEquals)*
+;
+
+EqualsOrNotEquals returns Expression:
+	Compare (({Equals.left=current} '==' | {NotEquals.left=current}  '!=' ) right=Compare)*
+;
+
+Compare returns Expression:
+	Concatonation (({Greater.left=current} '>' | {Lesser.left=current} '<' | {GreaterOrEquals.left=current} '>=' | {LesserOrEquals.left=current}  '<=' ) right=Concatonation)*
+;
+
+Concatonation returns Expression:
+	AdditionSubtraction (({Concat.left=current} '&') right=AdditionSubtraction)*
+;
+
+AdditionSubtraction returns Expression:
+	MultiplicationDivision (( {Plus.left=current} '+' | {Minus.left=current}  '-' ) right=MultiplicationDivision)*
+;
+
+MultiplicationDivision returns Expression:
+	Primary (({Mult.left=current} '*' | {Div.left=current}  '/'  ) right=Primary)*
+;
+
+Primary returns Expression:
+	{TypeValue} type=Type |
+	{This} 'this' |
+	{BooleanTrue} 'true' | 
+	{BooleanFalse} 'false' |
+	{StringValue} value=STRING |
+	{NumberValue} value=INT |
+	{VariableUse} ref=[Binding] |
+	{Parenthesis} '(' exp=Exp ')' |
+	{ExternalCall} func = [ExternalImport] '(' args += Exp? (',' args += Exp)* ')' |
+	{Not} '!' exp=Exp
+;
+
+
+VarBinding:
+	'var' name=ID ':' type=Type
+;
+
+Binding:
+	VarBinding | Parameter
+;
